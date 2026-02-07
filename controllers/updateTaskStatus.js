@@ -5,6 +5,12 @@ async function updateTaskStatus(req, res) {
         const { id } = req.params
         const { status } = req.body
 
+        if (typeof status !== "boolean") {
+          return res.status(400).json({
+            message: "O campo 'status' deve ser boolean (true ou false)."
+          })
+        }
+
         const task = await Task.findById(id)
 
         if (!task) {
@@ -22,3 +28,4 @@ async function updateTaskStatus(req, res) {
 }
 
 module.exports = updateTaskStatus
+
